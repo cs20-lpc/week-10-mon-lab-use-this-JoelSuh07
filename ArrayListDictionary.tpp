@@ -89,11 +89,27 @@ void ArrayListDictionary<Key, Val>::remove(const Key& k) {
 template <typename Key, typename Val>
 Val ArrayListDictionary<Key, Val>::seqSearchIter(const Key& target) const {
     // TODO
+    for (int i = 0; i < list->getLength(); ++i){
+        numComps++;
+        if (list->getElement(i).k == target){
+            return list->getElement(i).v;
+        }
+    }
+    throw string("seqSearchIter: error, target key not found");
 }
 
 template <typename Key, typename Val>
 Val ArrayListDictionary<Key, Val>::seqSearchRec(const Key& target, int i) const {
     // TODO
+    ++numComps;
+
+    if (target == list->getElement(i).k){
+        return list->getElement(i).v;
+    } else if (i <= list->getLength - 1){
+        seqSearchRec(target, i + 1);
+    } else {
+        throw string("seqSearchRec: error, target key not found");
+    }
 }
 
 template <typename Key, typename Val>
