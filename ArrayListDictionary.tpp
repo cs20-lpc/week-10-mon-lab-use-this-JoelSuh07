@@ -27,12 +27,41 @@ ArrayListDictionary<Key, Val>::~ArrayListDictionary() {
 template <typename Key, typename Val>
 Val ArrayListDictionary<Key, Val>::binSearchIter(const Key& target, int left, int right) const {
     // TODO
+    while (left <= right){
+
+        int mid = left + (right - left) / 2;
+        ++numComps;
+    
+        if (target == list->getElement(mid).k){
+            return list->getElement(mid).v;
+
+        } else if (target < list->getElement(mid).k){
+            right = mid - 1;
+
+        } else {
+            left = mid + 1;
+
+        }
+        throw string ("binSearchIter: error, target key not found");
+    }
 }
 
 template <typename Key, typename Val>
 Val ArrayListDictionary<Key, Val>::binSearchRec(const Key& target, int left, int right) const {
     // TODO
-}
+    ++numComps;
+
+    if (left > right) throw string ("binSearchRec: error, target key not found");
+
+    int mid = left + (right - left) / 2;
+
+    if (target == list->getElement(mid).k) return list->getElement(mid).v;
+
+    if (target < list->getElement(mid).k) return binSearchRec(target, left, mid - 1);
+
+    if (target > list->getElement(mid).k) return binSearchRec(target, mid + 1, right);
+    
+    }
 
 template <typename Key, typename Val>
 void ArrayListDictionary<Key, Val>::clear() {
@@ -103,13 +132,13 @@ Val ArrayListDictionary<Key, Val>::seqSearchRec(const Key& target, int i) const 
     // TODO
     ++numComps;
 
+    if (i >= list->getLength()) throw string("seqSearchRec: error, target key not found");
+    
     if (target == list->getElement(i).k){
-        return list->getElement(i).v;
-    } else if (i <= list->getLength - 1){
-        seqSearchRec(target, i + 1);
-    } else {
-        throw string("seqSearchRec: error, target key not found");
-    }
+            return list->getElement(i).v;
+        }
+
+        return seqSearchRec(target, i + 1);
 }
 
 template <typename Key, typename Val>
